@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    android:key="SmashwordsAccessState" >
+
+    <PreferenceCategory android:title="Smashwords settings" >
+        <EditTextPreference
+            android:dialogMessage="Please enter a valid email address"
+            android:dialogTitle="E-mail address"
+            android:key="sw_email"
+            android:summary="Used to access your Smashwords libary. Leave blank to disable Smashwords support."
+            android:title="Smashwords email address" />
+        <EditTextPreference
+            android:dialogMessage="Please enter your smashwords password"
+            android:dialogTitle="Password"
+            android:key="sw_password"
+            android:password="true"
+            android:summary="Used to access your Smashwords libary. Leave blank to disable Smashwords support."
+            android:title="Smashwords Password" />
+
+        <ListPreference
+            android:defaultValue="swdefault"
+            android:dialogTitle="Adult Content"
+            android:entries="@array/preferences_adultfilter_entries"
+            android:entryValues="@array/preferences_adultfilter_values"
+            android:key="sw_adultfilter"
+            android:summary="Do you want to enable adult content?"
+            android:title="Adult Content" />
+    </PreferenceCategory>
+
+</PreferenceScreen>
