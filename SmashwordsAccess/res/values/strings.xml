@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">SmashwordsAccess</string>
+    <string name="Main_Activity_Book_Recommendation">Book recommendation</string>
+    <string name="MainActivity_About_Title">About SmashwordsAccess</string>
+    <string name="MainActivity_About_Text">SmashwordsAccess is developed by <a href="http://www.unleashyouradventure.com">UnleashourAdventure</a>,
+        an independent ebook publisher for inspiring travel tales.</string>
+    <string name="SmashwordsAPIHelper_Result_IOException">Could not connect to Smashwords in order to to log in</string>
+    <string name="SmashwordsAPIHelper_Result_success">Successfully logged in into Smashwords"</string>
+    <string name="SmashwordsAPIHelper_Result_failed">Could not log in to Smashwords, please check your user name and password</string>
+</resources>
