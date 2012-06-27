@@ -6,7 +6,6 @@ import java.net.UnknownHostException;
 import java.util.List;
 
 import android.app.AlertDialog;
-import android.app.ListActivity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -28,6 +27,9 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.actionbarsherlock.app.SherlockListActivity;
+import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuItem;
 import com.novoda.imageloader.core.model.ImageTag;
 import com.novoda.imageloader.core.model.ImageTagFactory;
 import com.unleashyouradventure.swaccess.util.AndroidHelper;
@@ -44,7 +46,7 @@ import com.unleashyouradventure.swapi.retriever.BookListRetriever.Length;
 import com.unleashyouradventure.swapi.retriever.BookListRetriever.Price;
 import com.unleashyouradventure.swapi.retriever.BookListRetriever.Sortby;
 
-public class BookListActivity extends ListActivity {
+public class BookListActivity extends SherlockListActivity {
 
     public enum IntentProperty {
         listType, searchTerm
@@ -87,12 +89,12 @@ public class BookListActivity extends ListActivity {
         } else {
             this.listType.showOptions(this);
         }
+        this.getSupportActionBar().setTitle(this.listType.getTitle());
     }
 
     private void showList(BookList result) {
-        listAdapter.clear();
-        listAdapter.add(new DummyBookForLoadList());
-
+        this.getSupportActionBar().setTitle(this.listType.getTitle());
+        this.listAdapter.clear();
         for (Book book : result)
             listAdapter.add(book);
         if (result.hasMoreElementsToLoad()) {
@@ -106,6 +108,7 @@ public class BookListActivity extends ListActivity {
         new LoadListTask(progress).execute(listType);
     }
 
+    // legacy code: for the options button
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if ((event.getAction() == KeyEvent.ACTION_DOWN) && (keyCode == KeyEvent.KEYCODE_MENU)) {
@@ -113,6 +116,25 @@ public class BookListActivity extends ListActivity {
             return true;
         }
         return super.onKeyDown(keyCode, event);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        if (this.listType.hasOptions()) {
+            MenuItem item = menu.add(0, 1, 0, "Options");
+            item.setIcon(android.R.drawable.ic_menu_preferences);
+            item.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+        }
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home || item.getItemId() == 0) {
+            return false;
+        }
+        this.listType.showOptions(this);
+        return true;
     }
 
     private class BookListAdapter extends ArrayAdapter<Book> {
@@ -128,12 +150,7 @@ public class BookListActivity extends ListActivity {
         public View getView(int position, View convertView, ViewGroup parent) {
             Book book = getItem(position);
 
-            if (position == 0) {
-                convertView = inflater.inflate(R.layout.book_list_item_headline, null);
-                ((TextView) convertView.findViewById(R.id.bookListItemHeadlineText))
-                        .setText(listType.getTitle() + " »");
-                return convertView;
-            } else if (book instanceof DummyBookForLoadList) {
+            if (book instanceof DummyBookForLoadList) {
                 convertView = inflater.inflate(R.layout.book_list_item_more, null);
                 return convertView;
             }
@@ -259,6 +276,10 @@ public class BookListActivity extends ListActivity {
             // default: do nothing
         }
 
+        public boolean hasOptions() {
+            return false;
+        }
+
         public boolean isReadyForLoading() {
             return true;
         }
@@ -307,8 +328,22 @@ public class BookListActivity extends ListActivity {
             alert.show();
         }
 
+        @Override
+        public boolean hasOptions() {
+            return true;
+        }
+
         public boolean isReadyForLoading() {
             return this.searchTerm != null && this.searchTerm.trim().length() > 0;
+        }
+
+        public String getTitle() {
+            String txt = title;
+            if (this.searchTerm != null) {
+                txt += " » ";
+                txt += searchTerm;
+            }
+            return txt;
         }
     }
 
@@ -336,9 +371,11 @@ public class BookListActivity extends ListActivity {
         }
 
         public String getTitle() {
-            String txt = title + " ";
-            if (category != null)
+            String txt = title;
+            if (category != null) {
+                txt += " » ";
                 txt += category.toString();
+            }
             return txt;
         }
 
@@ -369,9 +406,8 @@ public class BookListActivity extends ListActivity {
             categoryAdapter.add(root);
             addCategories(categoryAdapter, root.getChildren().get(0).getChildren());// Fiction
             addCategories(categoryAdapter, root.getChildren().get(1).getChildren());// Non-Fiction
-
-            setSelection(categorySpinner, categoryAdapter, category);
             categorySpinner.setAdapter(categoryAdapter);
+            setSelection(categorySpinner, categoryAdapter, category);
             layout.addView(categorySpinner);
 
             final Spinner sortbySpinner = new Spinner(context);
@@ -424,6 +460,11 @@ public class BookListActivity extends ListActivity {
                 }
             });
             alert.show();
+        }
+
+        @Override
+        public boolean hasOptions() {
+            return true;
         }
 
         private <T> void setSelection(Spinner spinner, ArrayAdapter<T> adapter, T selection) {

@@ -1,13 +1,13 @@
 package com.unleashyouradventure.swaccess;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.webkit.WebView;
 
+import com.actionbarsherlock.app.SherlockActivity;
 import com.jsing.common.string.StringTrimmer;
 import com.unleashyouradventure.swaccess.util.StringUtils;
 
-public abstract class AbstractWebviewActivity extends Activity {
+public abstract class AbstractWebviewActivity extends SherlockActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         WebView webview = new WebView(this);

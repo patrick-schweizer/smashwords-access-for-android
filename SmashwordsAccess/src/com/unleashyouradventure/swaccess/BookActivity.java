@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.net.UnknownHostException;
 import java.util.List;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -21,6 +20,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.actionbarsherlock.app.SherlockListActivity;
 import com.jsing.common.string.StringTrimmer;
 import com.novoda.imageloader.core.model.ImageTag;
 import com.novoda.imageloader.core.model.ImageTagFactory;
@@ -36,7 +36,7 @@ import com.unleashyouradventure.swapi.retriever.Book;
 import com.unleashyouradventure.swapi.retriever.Book.Download;
 import com.unleashyouradventure.swapi.retriever.Book.FileType;
 
-public class BookActivity extends Activity {
+public class BookActivity extends SherlockListActivity {
 
     private ProgressDialog progress;
 
@@ -87,6 +87,10 @@ public class BookActivity extends Activity {
         bookDetailsView.setText("");
         if (book == null)
             return;
+
+        // Bar
+        this.getSupportActionBar().setTitle(book.getTitle());
+
         // Progress for loading details
         findViewById(R.id.bookLoadProgress).setVisibility(book.isBookDetailsAdded() ? View.GONE : View.VISIBLE);
 
