@@ -1,6 +1,5 @@
 package com.unleashyouradventure.swaccess;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -14,6 +13,7 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.actionbarsherlock.app.SherlockActivity;
 import com.novoda.imageloader.core.model.ImageTag;
 import com.novoda.imageloader.core.model.ImageTagFactory;
 import com.unleashyouradventure.swaccess.BookListActivity.CategoryList;
@@ -23,7 +23,7 @@ import com.unleashyouradventure.swaccess.util.BookOfTheDayHelper;
 import com.unleashyouradventure.swapi.retriever.Book;
 import com.unleashyouradventure.swapi.retriever.Book.ImageSize;
 
-public class MainActivity extends Activity {
+public class MainActivity extends SherlockActivity {
 
     enum Entry {
         myLibrary("My Library", android.R.drawable.ic_menu_gallery), search("Search", android.R.drawable.ic_menu_search), category(
@@ -137,7 +137,7 @@ public class MainActivity extends Activity {
         @Override
         protected void onPostExecute(final Book book) {
             ImageView bookDetailImage = (ImageView) findViewById(R.id.mainBookOfTheDayImage);
-            ImageTag tag = imageTagFactory.build(book.getCoverUrl(ImageSize.thumb));
+            ImageTag tag = imageTagFactory.build(book.getCoverUrl(ImageSize.full));
             ((ImageView) bookDetailImage).setTag(tag);
             SmashwordsAPIHelper.getImageLoader().getLoader().load(bookDetailImage);
             bookDetailImage.setClickable(true);
