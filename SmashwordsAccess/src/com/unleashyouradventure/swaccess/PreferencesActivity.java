@@ -1,9 +1,10 @@
 package com.unleashyouradventure.swaccess;
 
 import android.os.Bundle;
-import android.preference.PreferenceActivity;
 
-public class PreferencesActivity extends PreferenceActivity {
+import com.actionbarsherlock.app.SherlockPreferenceActivity;
+
+public class PreferencesActivity extends SherlockPreferenceActivity {
 
     enum name {
         sw_email, sw_password, sw_adultfilter
