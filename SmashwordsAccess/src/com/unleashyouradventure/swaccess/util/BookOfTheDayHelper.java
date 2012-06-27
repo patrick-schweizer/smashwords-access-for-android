@@ -1,6 +1,7 @@
 package com.unleashyouradventure.swaccess.util;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 import java.util.logging.Level;
@@ -54,40 +55,56 @@ public class BookOfTheDayHelper {
             log.log(Level.SEVERE, "Cannot read book list", e);
             books = new ArrayList<Book>();
         }
-        // fallback:
-        if (books.isEmpty()) {
-            books.addAll(getDefaultBooks());
+        // fill with default (add at least one default book)
+        List<Book> defaultBooks = getDefaultBooks();
+        Book book;
+        while (books.size() <= MAX_NUMBER_OF_BOOKS_IN_DB) {
+            if (defaultBooks.isEmpty()) {
+                break;
+            }
+            int index = defaultBooks.size() < 2 ? 0 : random.nextInt(defaultBooks.size() - 1);
+            book = defaultBooks.get(index);
+            if (!books.contains(book)) {
+                books.add(book);
+            }
+            defaultBooks.remove(index);
         }
     }
 
     private List<Book> getDefaultBooks() {
-        List<Book> books = new ArrayList<Book>();
+        List<Book> books = new LinkedList<Book>();
         Book book = new Book();
         book.setAuthor("Sherrie McCarthy");
         book.setCoverUrl("http://cache.smashwire.com/bookCovers/2c0ef26c7bd3d766766f0a2f438dae991c18ada8");
         book.setPriceInCent(299);
         book.setTitle("Buying and Riding a Motorcycle in South East Asia");
         book.setId(142475);
+        books.add(book);
 
+        book = new Book();
         book.setAuthor("Patrick Schweizer");
         book.setCoverUrl("http://cache.smashwire.com/bookCovers/03d3d55ec4ab0bd29a36cffda2c129e5d452d4f5");
         book.setPriceInCent(299);
         book.setTitle("Fernweh - mit dem Motorrad um die Welt");
         book.setId(120327);
+        books.add(book);
 
+        book = new Book();
         book.setAuthor("Sherrie McCarthy");
         book.setCoverUrl("http://cache.smashwire.com/bookCovers/8e6db3a08d77a9717ba4ea7017cc23934d8ca9ef");
         book.setPriceInCent(399);
         book.setTitle("Iceland: A Stormy Motorcycle Adventure");
         book.setId(109660);
+        books.add(book);
 
+        book = new Book();
         book.setAuthor("Sherrie McCarthy");
         book.setCoverUrl("http://cache.smashwire.com/bookCovers/ea3ebad5e0bea7c7f73d0472c9a3dcc77c54a5f1");
         book.setPriceInCent(99);
         book.setTitle("The Unleash Your Adventure Packlist: What To Take, What To Leave, & The Hows & Whys Of Motorcycle Travel");
         book.setId(90235);
-
         books.add(book);
+
         return books;
     }
 
