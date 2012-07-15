@@ -71,9 +71,7 @@ public class BookListActivity extends SherlockListActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
                 Book book = listAdapter.getItem(position);
-                if (position == 0) {
-                    listType.showOptions(BookListActivity.this);
-                } else if (book instanceof DummyBookForLoadList) {
+                if (book instanceof DummyBookForLoadList) {
                     new LoadMoreTask().execute();
                 } else {
                     Intent intent = new Intent(lv.getContext(), BookActivity.class);

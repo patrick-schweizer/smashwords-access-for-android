@@ -1,22 +1,13 @@
 package com.unleashyouradventure.swaccess;
 
-import android.content.pm.PackageManager.NameNotFoundException;
+import com.unleashyouradventure.swaccess.util.AndroidHelper;
 
 public class AboutActivity extends AbstractWebviewActivity {
 
     @Override
     protected String modifyHtml(String html) {
-        html = html.replace("{version}", getVersion());
+        html = html.replace("{version}", AndroidHelper.getVersion(this));
         return html;
     }
 
-    private String getVersion() {
-        String version;
-        try {
-            version = getPackageManager().getPackageInfo(getPackageName(), 0).versionName;
-        } catch (NameNotFoundException e) {
-            version = "???";
-        }
-        return version;
-    }
 }

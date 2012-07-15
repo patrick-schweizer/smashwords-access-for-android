@@ -5,9 +5,6 @@
 	<classpathentry kind="con" path="com.android.ide.eclipse.adt.ANDROID_FRAMEWORK"/>
 	<classpathentry kind="con" path="com.android.ide.eclipse.adt.LIBRARIES"/>
 	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/SmashwordsAPI"/>
-	<classpathentry kind="lib" path="lib/jsoup-1.6.1.jar"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/JSCommons"/>
-	<classpathentry kind="lib" path="lib/imageloader-core-1.5.2.jar"/>
-	<classpathentry kind="lib" path="lib/gson-2.2.1.jar"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>

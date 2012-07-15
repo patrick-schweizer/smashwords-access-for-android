@@ -19,6 +19,7 @@ import com.novoda.imageloader.core.model.ImageTagFactory;
 import com.unleashyouradventure.swaccess.BookListActivity.CategoryList;
 import com.unleashyouradventure.swaccess.BookListActivity.LibraryList;
 import com.unleashyouradventure.swaccess.BookListActivity.SearchList;
+import com.unleashyouradventure.swaccess.util.AppRater;
 import com.unleashyouradventure.swaccess.util.BookOfTheDayHelper;
 import com.unleashyouradventure.swapi.retriever.Book;
 import com.unleashyouradventure.swapi.retriever.Book.ImageSize;
@@ -63,6 +64,10 @@ public class MainActivity extends SherlockActivity {
         bookOfTheDayHelper = new BookOfTheDayHelper(this);
         this.imageTagFactory = new ImageTagFactory(this, R.drawable.spinner_black_20);
         imageTagFactory.setErrorImageId(R.drawable.loading_error);
+
+        // Rating reminder
+        // debug AppRater.showRateDialog(this, null);
+        AppRater.app_launched(this);
     }
 
     @Override
