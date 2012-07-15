@@ -17,10 +17,11 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.actionbarsherlock.app.SherlockListActivity;
+import com.actionbarsherlock.app.SherlockActivity;
 import com.jsing.common.string.StringTrimmer;
 import com.novoda.imageloader.core.model.ImageTag;
 import com.novoda.imageloader.core.model.ImageTagFactory;
@@ -36,7 +37,7 @@ import com.unleashyouradventure.swapi.retriever.Book;
 import com.unleashyouradventure.swapi.retriever.Book.Download;
 import com.unleashyouradventure.swapi.retriever.Book.FileType;
 
-public class BookActivity extends SherlockListActivity {
+public class BookActivity extends SherlockActivity {
 
     private ProgressDialog progress;
 
@@ -99,6 +100,13 @@ public class BookActivity extends SherlockListActivity {
         ImageTag tag = imageTagFactory.build(book.getCoverUrl(Book.ImageSize.full));
         ((ImageView) bookDetailImage).setTag(tag);
         SmashwordsAPIHelper.getImageLoader().getLoader().load(bookDetailImage);
+
+        // Rating
+        RatingBar ratingBar = (RatingBar) findViewById(R.id.bookRatingBar);
+        ratingBar.setVisibility((book.getRating() > -1) ? RatingBar.VISIBLE : RatingBar.GONE);
+        if (book.getRating() >= 0) {
+            ratingBar.setRating((float) book.getRating());
+        }
 
         // Book Details
         StringBuilder b = new StringBuilder();
@@ -223,7 +231,9 @@ public class BookActivity extends SherlockListActivity {
 
         @Override
         protected void onPostExecute(Void result) {
-            progress.dismiss();
+            if (progress.isShowing()) {
+                progress.dismiss();
+            }
             Toast.makeText(getApplicationContext(), resultMessage, Toast.LENGTH_SHORT).show();
         }
     }

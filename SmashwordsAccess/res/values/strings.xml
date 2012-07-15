@@ -8,4 +8,5 @@
     <string name="SmashwordsAPIHelper_Result_IOException">Could not connect to Smashwords in order to to log in</string>
     <string name="SmashwordsAPIHelper_Result_success">Successfully logged in into Smashwords"</string>
     <string name="SmashwordsAPIHelper_Result_failed">Could not log in to Smashwords, please check your user name and password</string>
+    <string name="AppRater_Text">If you enjoy using {appTitle}, please take a moment to rate it.\nIf you have any problems or suggestion please click on "Houston I have a problem" and we will try to help you.\nThanks for your using {appTitle}!</string>
 </resources>
