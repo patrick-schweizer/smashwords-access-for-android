@@ -2,15 +2,15 @@ package com.unleashyouradventure.swaccess.readers;
 
 import com.unleashyouradventure.swapi.retriever.Book.FileType;
 
-public class PageTurner extends ReaderWithIntent {
+public class PageTurnerPro extends ReaderWithIntent {
 
-    PageTurner() {
-        super("PageTurner", FileType.Epub);
+    PageTurnerPro() {
+        super("PageTurner Pro", FileType.Epub);
     }
 
     @Override
     protected String getReaderUri() {
-        return "net.nightwhistler.pageturner.ads";
+        return "net.nightwhistler.pageturner.pro";
     }
 
     @Override
@@ -19,6 +19,6 @@ public class PageTurner extends ReaderWithIntent {
     }
 
     public String getReaderLink() {
-        return "market://details?id=net.nightwhistler.pageturner.ads";
+        return "market://details?id=net.nightwhistler.pageturner.pro";
     }
 }
