@@ -75,6 +75,14 @@ public class BookOfTheDayHelper {
         List<Book> books = new LinkedList<Book>();
         Book book = new Book();
         book.setAuthor("Sherrie McCarthy");
+        book.setCoverUrl("http://cache.smashwire.com/bookCovers/c995b4887666c244215b98c525b7856fb2f74ca6");
+        book.setPriceInCent(299);
+        book.setTitle("Fernweh: A Trans Continental Motorcycle Adventure");
+        book.setId(209471);
+        books.add(book);
+
+        book = new Book();
+        book.setAuthor("Sherrie McCarthy");
         book.setCoverUrl("http://cache.smashwire.com/bookCovers/2c0ef26c7bd3d766766f0a2f438dae991c18ada8");
         book.setPriceInCent(299);
         book.setTitle("Buying and Riding a Motorcycle in South East Asia");
@@ -163,8 +171,7 @@ public class BookOfTheDayHelper {
         // Creating Tables
         @Override
         public void onCreate(SQLiteDatabase db) {
-            String CREATE_CONTACTS_TABLE = "CREATE TABLE " + TABLE_BOOKS + "(" + KEY_ID + " INTEGER PRIMARY KEY,"
-                    + KEY_INSERT_DATE + " INTEGER," + KEY_BOOK + " TEXT" + ")";
+            String CREATE_CONTACTS_TABLE = "CREATE TABLE " + TABLE_BOOKS + "(" + KEY_ID + " INTEGER PRIMARY KEY," + KEY_INSERT_DATE + " INTEGER," + KEY_BOOK + " TEXT" + ")";
             db.execSQL(CREATE_CONTACTS_TABLE);
         }
 
@@ -195,8 +202,7 @@ public class BookOfTheDayHelper {
         public Book getBook(long id) {
             SQLiteDatabase db = this.getReadableDatabase();
 
-            Cursor cursor = db.query(TABLE_BOOKS, new String[] { KEY_ID, KEY_BOOK }, KEY_ID + "=?",
-                    new String[] { String.valueOf(id) }, null, null, null, null);
+            Cursor cursor = db.query(TABLE_BOOKS, new String[] { KEY_ID, KEY_BOOK }, KEY_ID + "=?", new String[] { String.valueOf(id) }, null, null, null, null);
             if (cursor != null)
                 cursor.moveToFirst();
             String bookJSon = cursor.getString(2);
@@ -208,8 +214,7 @@ public class BookOfTheDayHelper {
         public boolean exists(long id) {
             SQLiteDatabase db = this.getReadableDatabase();
 
-            Cursor cursor = db.query(TABLE_BOOKS, new String[] { KEY_ID }, KEY_ID + "=?",
-                    new String[] { String.valueOf(id) }, null, null, null, null);
+            Cursor cursor = db.query(TABLE_BOOKS, new String[] { KEY_ID }, KEY_ID + "=?", new String[] { String.valueOf(id) }, null, null, null, null);
             boolean result = cursor.moveToFirst();
             cursor.close();
             return result;
@@ -235,8 +240,7 @@ public class BookOfTheDayHelper {
 
         public List<Long> getInsertDateList() {
             List<Long> dateList = new ArrayList<Long>();
-            String selectQuery = "SELECT " + KEY_INSERT_DATE + " FROM " + TABLE_BOOKS + " ORDER BY " + KEY_INSERT_DATE
-                    + " DESC";
+            String selectQuery = "SELECT " + KEY_INSERT_DATE + " FROM " + TABLE_BOOKS + " ORDER BY " + KEY_INSERT_DATE + " DESC";
             Cursor cursor = getWritableDatabase().rawQuery(selectQuery, null);
 
             if (cursor.moveToFirst()) {
