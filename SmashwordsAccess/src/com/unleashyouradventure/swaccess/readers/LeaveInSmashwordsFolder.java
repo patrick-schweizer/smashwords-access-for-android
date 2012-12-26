@@ -9,7 +9,7 @@ import com.unleashyouradventure.swapi.retriever.Book.FileType;
 public class LeaveInSmashwordsFolder extends Reader {
 
     public LeaveInSmashwordsFolder() {
-        super("Leave book in Smashwords folder", FileType.values());
+        super("Leave book in Smashwords folder", new FileType[] { FileType.Epub, FileType.PDF, FileType.MOBI });
     }
 
     @Override
