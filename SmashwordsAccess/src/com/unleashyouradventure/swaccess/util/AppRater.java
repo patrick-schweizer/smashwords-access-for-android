@@ -68,15 +68,14 @@ public class AppRater {
         b1.setText("Rate " + appTitle);
         b1.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
-                mContext.startActivity(new Intent(Intent.ACTION_VIEW, Uri
-                        .parse("market://details?id=" + appPackageName)));
+                mContext.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + appPackageName)));
                 dialog.dismiss();
             }
         });
         ll.addView(b1);
 
         Button buttonProblem = new Button(mContext);
-        buttonProblem.setText("Huston I have a problem");
+        buttonProblem.setText("Houston I have a problem");
         buttonProblem.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
                 Intent emailIntent = new Intent(android.content.Intent.ACTION_SEND);
