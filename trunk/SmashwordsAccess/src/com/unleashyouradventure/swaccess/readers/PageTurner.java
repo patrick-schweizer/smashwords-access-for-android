@@ -15,7 +15,7 @@ public class PageTurner extends ReaderWithIntent {
 
     @Override
     protected String getReaderClass() {
-        return getReaderUri() + ".activity.ReadingActivity";
+        return "net.nightwhistler.pageturner.activity.ReadingActivity";
     }
 
     public String getReaderLink() {
