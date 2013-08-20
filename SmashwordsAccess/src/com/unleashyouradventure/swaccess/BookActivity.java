@@ -22,7 +22,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockActivity;
-import com.jsing.common.string.StringTrimmer;
 import com.novoda.imageloader.core.model.ImageTag;
 import com.novoda.imageloader.core.model.ImageTagFactory;
 import com.unleashyouradventure.swaccess.readers.LeaveInSmashwordsFolder;
@@ -36,6 +35,7 @@ import com.unleashyouradventure.swapi.Smashwords;
 import com.unleashyouradventure.swapi.retriever.Book;
 import com.unleashyouradventure.swapi.retriever.Book.Download;
 import com.unleashyouradventure.swapi.retriever.Book.FileType;
+import com.unleashyouradventure.swapi.util.StringTrimmer;
 
 public class BookActivity extends SherlockActivity {
 
@@ -73,8 +73,7 @@ public class BookActivity extends SherlockActivity {
         final String action = intent.getAction();
         long id;
         if (Intent.ACTION_VIEW.equals(action)) {
-            String bookId = new StringTrimmer(intent.getData().getPath()).getBeforeNext("?").getAfterLast("/")
-                    .toString();
+            String bookId = new StringTrimmer(intent.getData().getPath()).getBeforeNext("?").getAfterLast("/").toString();
             id = Long.parseLong(bookId);
         } else
             id = getIntent().getLongExtra(IntentParam.bookToShow.name(), 0);
@@ -138,8 +137,7 @@ public class BookActivity extends SherlockActivity {
 
         // Download
         Button bookButtonDownload = (Button) findViewById(R.id.bookButtonDownload);
-        bookButtonDownload.setVisibility((book.isBookDetailsAdded() && book.canBookBeDownloaded()) ? Button.VISIBLE
-                : Button.GONE);
+        bookButtonDownload.setVisibility((book.isBookDetailsAdded() && book.canBookBeDownloaded()) ? Button.VISIBLE : Button.GONE);
         OnClickListener downloadListener = new OnClickListener() {
 
             @Override
