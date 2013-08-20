@@ -4,8 +4,8 @@ import android.os.Bundle;
 import android.webkit.WebView;
 
 import com.actionbarsherlock.app.SherlockActivity;
-import com.jsing.common.string.StringTrimmer;
 import com.unleashyouradventure.swaccess.util.StringUtils;
+import com.unleashyouradventure.swapi.util.StringTrimmer;
 
 public abstract class AbstractWebviewActivity extends SherlockActivity {
     public void onCreate(Bundle savedInstanceState) {
