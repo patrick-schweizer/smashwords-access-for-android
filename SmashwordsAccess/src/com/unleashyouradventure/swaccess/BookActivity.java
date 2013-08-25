@@ -175,6 +175,21 @@ public class BookActivity extends SherlockActivity {
         bookButtonDownload.setOnClickListener(downloadListener);
         bookButtonDownloadSample.setOnClickListener(downloadListener);
 
+        // Share
+        Button shareButton = (Button) findViewById(R.id.bookButtonShare);
+        shareButton.setOnClickListener(new OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                String title = book.getTitle();
+                Intent intent = new Intent(Intent.ACTION_SEND);
+                intent.setType("text/plain");
+                intent.putExtra(Intent.EXTRA_TEXT, title + " " + book.getUrlForBookDetails() + "?ref=swaccess");
+                intent.putExtra(android.content.Intent.EXTRA_SUBJECT, title);
+                startActivity(Intent.createChooser(intent, "Share " + title));
+            }
+        });
+
         // Book Description
         TextView bookDescriptionView = (TextView) findViewById(R.id.bookDescription);
         String description = book.getDescriptionLong();

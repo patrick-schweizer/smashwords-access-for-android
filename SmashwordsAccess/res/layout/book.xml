@@ -52,6 +52,12 @@
             android:layout_height="wrap_content"
             android:text="Download Book"
             android:visibility="invisible" />
+        <Button
+            android:id="@+id/bookButtonShare"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Share Book Link"
+             />
         <RatingBar
             android:id="@+id/bookRatingBar"
             android:layout_width="wrap_content"
