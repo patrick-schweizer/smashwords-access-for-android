@@ -53,7 +53,7 @@ public class BookActivity extends SherlockActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.book);
-        this.imageTagFactory = new ImageTagFactory(this, R.drawable.spinner_black_20);
+        this.imageTagFactory = ImageTagFactory.newInstance(this, R.drawable.spinner_black_20);
         imageTagFactory.setErrorImageId(R.drawable.loading_error);
         bookOfTheDayHelper = new BookOfTheDayHelper(this);
         long bookId = getBookIdFromIntent();
@@ -96,7 +96,7 @@ public class BookActivity extends SherlockActivity {
 
         // Image
         ImageView bookDetailImage = (ImageView) findViewById(R.id.bookDetailImage);
-        ImageTag tag = imageTagFactory.build(book.getCoverUrl(Book.ImageSize.full));
+        ImageTag tag = imageTagFactory.build(book.getCover_url(Book.ImageSize.full), this);
         ((ImageView) bookDetailImage).setTag(tag);
         SmashwordsAPIHelper.getImageLoader().getLoader().load(bookDetailImage);
 
@@ -110,7 +110,7 @@ public class BookActivity extends SherlockActivity {
         // Book Details
         StringBuilder b = new StringBuilder();
         b.append(book.getTitle()).append("\n");
-        b.append("by ").append(book.getAuthor()).append("\n");
+        b.append("by ").append(book.getAuthors().get(0).getDisplay_name()).append("\n");
         String priceString = Format.getPrice(book.getPriceInCent());
         b.append("Price: ").append(priceString).append("\n");
         bookDetailsView.setText(b.toString());
@@ -192,9 +192,9 @@ public class BookActivity extends SherlockActivity {
 
         // Book Description
         TextView bookDescriptionView = (TextView) findViewById(R.id.bookDescription);
-        String description = book.getDescriptionLong();
+        String description = book.getLong_description();
         if (description == null || description.length() == 0) {
-            description = book.getDescriptionShort();
+            description = book.getShort_description();
         }
         bookDescriptionView.setText(description);
     }

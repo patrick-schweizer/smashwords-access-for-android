@@ -80,7 +80,7 @@ public class BookListActivity extends SherlockListActivity {
                 }
             }
         });
-        this.imageTagFactory = new ImageTagFactory(this, R.drawable.spinner_black_20);
+        this.imageTagFactory = ImageTagFactory.newInstance(this, R.drawable.spinner_black_20);
         showList(new BookList());
         if (this.listType.isReadyForLoading()) {
             reloadList();
@@ -136,7 +136,6 @@ public class BookListActivity extends SherlockListActivity {
     }
 
     private class BookListAdapter extends ArrayAdapter<Book> {
-
         LayoutInflater inflater;
 
         public BookListAdapter(Context context, int textViewResourceId) {
@@ -156,13 +155,13 @@ public class BookListActivity extends SherlockListActivity {
             convertView = inflater.inflate(R.layout.book_list_item, null);
 
             ImageView bookImageView = (ImageView) convertView.findViewById(R.id.book_list_image);
-            ImageTag tag = imageTagFactory.build(book.getCoverUrl(Book.ImageSize.thumb));
+            ImageTag tag = imageTagFactory.build(book.getCover_url(Book.ImageSize.thumb), this.getContext());
             ((ImageView) bookImageView).setTag(tag);
             SmashwordsAPIHelper.getImageLoader().getLoader().load(bookImageView);
 
             TextView tv = (TextView) convertView.findViewById(R.id.book_list_text);
             String priceString = Format.getPrice(book.getPriceInCent());
-            tv.setText(book.getTitle() + "\n" + book.getAuthor() + "\n" + priceString);
+            tv.setText(book.getTitle() + "\n" + book.getAuthors().get(0).getDisplay_name() + "\n" + priceString);
 
             return convertView;
         }
@@ -179,8 +178,7 @@ public class BookListActivity extends SherlockListActivity {
         protected BookList doInBackground(ListType... params) {
 
             ListType type = params[0];
-            if (type instanceof LibraryList
-                    && !SmashwordsAPIHelper.getSmashwords().getLogin().areCredentialsWellFormed()) {
+            if (type instanceof LibraryList && !SmashwordsAPIHelper.getSmashwords().getLogin().areCredentialsWellFormed()) {
                 resultMessage = "In order to view your library you must enter your username and password under preferences.";
                 return new BookList();
             }
@@ -397,8 +395,7 @@ public class BookListActivity extends SherlockListActivity {
 
             // Set an EditText view to get user input
             final Spinner categorySpinner = new Spinner(context);
-            ArrayAdapter<BookCategory> categoryAdapter = new ArrayAdapter<BookCategory>(context,
-                    android.R.layout.simple_spinner_item);
+            ArrayAdapter<BookCategory> categoryAdapter = new ArrayAdapter<BookCategory>(context, android.R.layout.simple_spinner_item);
             categoryAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             BookCategory root = SmashwordsAPIHelper.getSmashwords().getBookCategoryRetriever().getRootCategory();
             categoryAdapter.add(root);
@@ -409,24 +406,21 @@ public class BookListActivity extends SherlockListActivity {
             layout.addView(categorySpinner);
 
             final Spinner sortbySpinner = new Spinner(context);
-            ArrayAdapter<Sortby> sortbyAdapter = new ArrayAdapter<Sortby>(context,
-                    android.R.layout.simple_spinner_item, Sortby.values());
+            ArrayAdapter<Sortby> sortbyAdapter = new ArrayAdapter<Sortby>(context, android.R.layout.simple_spinner_item, Sortby.values());
             sortbyAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             sortbySpinner.setAdapter(sortbyAdapter);
             setSelection(sortbySpinner, sortbyAdapter, sortby);
             layout.addView(sortbySpinner);
 
             final Spinner priceSpinner = new Spinner(context);
-            ArrayAdapter<Price> priceAdapter = new ArrayAdapter<Price>(context, android.R.layout.simple_spinner_item,
-                    Price.values());
+            ArrayAdapter<Price> priceAdapter = new ArrayAdapter<Price>(context, android.R.layout.simple_spinner_item, Price.values());
             priceAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             priceSpinner.setAdapter(priceAdapter);
             setSelection(priceSpinner, priceAdapter, price);
             layout.addView(priceSpinner);
 
             final Spinner lengthSpinner = new Spinner(context);
-            ArrayAdapter<Length> lengthAdapter = new ArrayAdapter<Length>(context,
-                    android.R.layout.simple_spinner_item, Length.values());
+            ArrayAdapter<Length> lengthAdapter = new ArrayAdapter<Length>(context, android.R.layout.simple_spinner_item, Length.values());
             lengthAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             lengthSpinner.setAdapter(lengthAdapter);
             setSelection(lengthSpinner, lengthAdapter, length);
@@ -440,8 +434,7 @@ public class BookListActivity extends SherlockListActivity {
                     Price newPrice = (Price) priceSpinner.getSelectedItem();
                     Length newLength = (Length) lengthSpinner.getSelectedItem();
 
-                    boolean reloadRequired = !(newCategory.equals(category)) || sortby != newSortby
-                            || price != newPrice || length != newLength;
+                    boolean reloadRequired = !(newCategory.equals(category)) || sortby != newSortby || price != newPrice || length != newLength;
                     if (reloadRequired) {
                         category = newCategory;
                         sortby = newSortby;
