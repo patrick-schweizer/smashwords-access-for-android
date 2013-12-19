@@ -27,9 +27,8 @@ import com.unleashyouradventure.swapi.retriever.Book.ImageSize;
 public class MainActivity extends SherlockActivity {
 
     enum Entry {
-        myLibrary("My Library", android.R.drawable.ic_menu_gallery), search("Search", android.R.drawable.ic_menu_search), category(
-                "By Category", android.R.drawable.ic_menu_compass), settings("Preferences",
-                android.R.drawable.ic_menu_preferences), reader("Readers", android.R.drawable.ic_menu_preferences),
+        myLibrary("My Library", android.R.drawable.ic_menu_gallery), search("Search", android.R.drawable.ic_menu_search), category("By Category", android.R.drawable.ic_menu_compass), settings(
+                "Preferences", android.R.drawable.ic_menu_preferences), reader("Readers", android.R.drawable.ic_menu_preferences),
 
         about("About", android.R.drawable.ic_menu_info_details);
         private final String text;
@@ -62,7 +61,7 @@ public class MainActivity extends SherlockActivity {
 
         // Book of the day
         bookOfTheDayHelper = new BookOfTheDayHelper(this);
-        this.imageTagFactory = new ImageTagFactory(this, R.drawable.spinner_black_20);
+        this.imageTagFactory = ImageTagFactory.newInstance(this, R.drawable.spinner_black_20);
         imageTagFactory.setErrorImageId(R.drawable.loading_error);
 
         // Rating reminder
@@ -73,7 +72,7 @@ public class MainActivity extends SherlockActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        new ShowBookOfTheDayTask().execute();
+        new ShowBookOfTheDayTask(this).execute();
     }
 
     public class MenuItem extends ArrayAdapter<Entry> {
@@ -132,6 +131,11 @@ public class MainActivity extends SherlockActivity {
     }
 
     private class ShowBookOfTheDayTask extends AsyncTask<Void, Void, Book> {
+        private final Context context;
+
+        public ShowBookOfTheDayTask(Context context) {
+            this.context = context;
+        }
 
         @Override
         protected Book doInBackground(Void... params) {
@@ -142,7 +146,7 @@ public class MainActivity extends SherlockActivity {
         @Override
         protected void onPostExecute(final Book book) {
             ImageView bookDetailImage = (ImageView) findViewById(R.id.mainBookOfTheDayImage);
-            ImageTag tag = imageTagFactory.build(book.getCoverUrl(ImageSize.full));
+            ImageTag tag = imageTagFactory.build(book.getCover_url(ImageSize.full), context);
             ((ImageView) bookDetailImage).setTag(tag);
             SmashwordsAPIHelper.getImageLoader().getLoader().load(bookDetailImage);
             bookDetailImage.setClickable(true);
