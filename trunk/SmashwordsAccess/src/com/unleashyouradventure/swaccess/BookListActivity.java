@@ -12,6 +12,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -120,7 +121,7 @@ public class BookListActivity extends SherlockListActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         if (this.listType.hasOptions()) {
             MenuItem item = menu.add(0, 1, 0, "Options");
-            item.setIcon(android.R.drawable.ic_menu_preferences);
+            item.setIcon(android.R.drawable.ic_menu_search);
             item.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
         }
         return true;
@@ -160,7 +161,7 @@ public class BookListActivity extends SherlockListActivity {
             SmashwordsAPIHelper.getImageLoader().getLoader().load(bookImageView);
 
             TextView tv = (TextView) convertView.findViewById(R.id.book_list_text);
-            String priceString = Format.getPrice(book.getPriceInCent());
+            String priceString = Format.getPrice(book.getPrice());
             tv.setText(book.getTitle() + "\n" + book.getAuthors().get(0).getDisplay_name() + "\n" + priceString);
 
             return convertView;
@@ -196,8 +197,12 @@ public class BookListActivity extends SherlockListActivity {
         protected void onPostExecute(BookList result) {
             booklist = result;
             showList(result);
-            if (progress.isShowing()) {
-                progress.dismiss();
+            try {
+                if (progress.isShowing()) {
+                    progress.dismiss();
+                }
+            } catch (IllegalArgumentException e) {
+                Log.w(BookListActivity.class.getName(), e);
             }
             if (resultMessage != null)
                 showToast(resultMessage);
@@ -345,6 +350,8 @@ public class BookListActivity extends SherlockListActivity {
 
     public static class LibraryList extends ListType {
 
+        private static final long serialVersionUID = 1L;
+
         public LibraryList() {
             super("My Library");
         }
@@ -356,7 +363,7 @@ public class BookListActivity extends SherlockListActivity {
     }
 
     public static class CategoryList extends ListType {
-
+        private static final long serialVersionUID = 1L;
         private BookCategory category;
         private Sortby sortby;
         private Price price;
