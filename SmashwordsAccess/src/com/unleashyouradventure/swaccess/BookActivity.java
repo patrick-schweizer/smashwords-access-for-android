@@ -110,8 +110,8 @@ public class BookActivity extends SherlockActivity {
         // Book Details
         StringBuilder b = new StringBuilder();
         b.append(book.getTitle()).append("\n");
-        b.append("by ").append(book.getAuthors().get(0).getDisplay_name()).append("\n");
-        String priceString = Format.getPrice(book.getPriceInCent());
+        b.append("by ").append(book.getFirstAuthorDisplayName()).append("\n");
+        String priceString = Format.getPrice(book.getPrice());
         b.append("Price: ").append(priceString).append("\n");
         bookDetailsView.setText(b.toString());
 

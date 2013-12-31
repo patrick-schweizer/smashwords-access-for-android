@@ -43,8 +43,7 @@ public class SmashwordsAPIHelper {
         LoaderSettings settings = new SettingsBuilder().withDisconnectOnEveryCall(true).build(context);
         imageManager = new ImageManager(context, settings);
 
-        settings = new SettingsBuilder().withDisconnectOnEveryCall(true).withAsyncTasks(false)
-                .withCacheManager(new LruBitmapCache(context)).build(context);
+        settings = new SettingsBuilder().withDisconnectOnEveryCall(true).withAsyncTasks(false).withCacheManager(new LruBitmapCache(context)).build(context);
 
     }
 
@@ -61,7 +60,7 @@ public class SmashwordsAPIHelper {
         SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(context);
         configureLogin(context, sharedPrefs);
         AdultContent adultContent = getAdultContent(sharedPrefs);
-        sw.getBookListRetriever().setAdultContent(adultContent);
+        sw.getLoader().setAdultContent(adultContent);
     }
 
     private static void configureLogin(Context context, SharedPreferences sharedPrefs) {
@@ -77,8 +76,7 @@ public class SmashwordsAPIHelper {
     }
 
     private static AdultContent getAdultContent(SharedPreferences sharedPrefs) {
-        String swAdultFilterString = sharedPrefs.getString(PreferencesActivity.name.sw_adultfilter.name(),
-                AdultContent.swdefault.name());
+        String swAdultFilterString = sharedPrefs.getString(PreferencesActivity.name.sw_adultfilter.name(), AdultContent.swdefault.name());
         for (AdultContent filter : AdultContent.values()) {
             if (filter.name().equals(swAdultFilterString)) {
                 return filter;
