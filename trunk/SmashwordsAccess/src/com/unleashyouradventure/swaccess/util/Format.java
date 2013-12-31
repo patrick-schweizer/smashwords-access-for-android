@@ -1,14 +1,20 @@
 package com.unleashyouradventure.swaccess.util;
 
 import java.text.DecimalFormat;
+import java.text.DecimalFormatSymbols;
+import java.util.Locale;
+
+import com.unleashyouradventure.swapi.retriever.json.JPrices;
 
 public class Format {
 
-    private static DecimalFormat priceFormat = new DecimalFormat("#.##");
+    private static DecimalFormat priceFormat = new DecimalFormat("0.00", DecimalFormatSymbols.getInstance(new Locale("en_US")));
 
-    public static String getPrice(int priceInCent) {
-        double price = (double) priceInCent / 100;
-        return "$" + priceFormat.format(price);
+    public static String getPrice(JPrices prices) {
+        double amount = 0.00;
+        if (prices != null && prices.getPrices().size() > 0)
+            amount = prices.getPrices().get(0).getAmount();
+        return "$" + priceFormat.format(amount);
     }
 
 }
