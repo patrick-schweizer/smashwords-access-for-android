@@ -5,7 +5,6 @@
 	<classpathentry kind="con" path="com.android.ide.eclipse.adt.ANDROID_FRAMEWORK"/>
 	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.LIBRARIES"/>
 	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/SmashwordsAPI"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/ActionSherlockLibrary"/>
 	<classpathentry exported="true" kind="con" path="com.android.ide.eclipse.adt.DEPENDENCIES"/>
 	<classpathentry kind="lib" path="libs/gson-2.2.1.jar"/>
 	<classpathentry kind="lib" path="libs/jsoup-1.6.1.jar"/>
