@@ -127,7 +127,7 @@ public class BookOfTheDayHelper {
 
     private JPrice getPrice(int priceInCents) {
         JPrice price = new JPrice();
-        price.setAmount(priceInCents / 100);
+        price.setAmount(((double) priceInCents) / 100);
         price.setCurrency("USD");
         return price;
     }
