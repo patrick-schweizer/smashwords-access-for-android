@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <ImageView
+        android:id="@+id/book_list_image"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:contentDescription="Image of book"
+        android:padding="2dp" />
+
+    <TextView
+        android:id="@+id/book_list_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:padding="2dp"
+        android:textSize="16dp" >
+    </TextView>
+
+</LinearLayout><!-- From: file:/apps/git/smashwords-access-for-android/app/src/main/res/layout/book_list_item.xml -->
