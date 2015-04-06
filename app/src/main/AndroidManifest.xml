@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.unleashyouradventure.swaccess"
     android:versionCode="15"
-    android:versionName="015 beta" >
+    android:versionName="016 beta" >
 
     <uses-sdk android:minSdkVersion="9" />
 

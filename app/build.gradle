@@ -16,12 +16,19 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
         }
     }
+
+    packagingOptions {
+        // we need this since it complains about the following files from apache commons
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/NOTICE.txt'
+    }
 }
 
 dependencies {
     compile 'com.google.code.gson:gson:2.2.1'
     compile 'com.actionbarsherlock:actionbarsherlock:4.4.0@aar'
     compile 'com.android.support:support-v4:18.0.0'
+    compile 'com.unleashyouradventure.sw:smashwords-java-api:1.0-SNAPSHOT'
     compile files('libs/imageloader-core-1.5.8.jar')
     compile files('libs/jsoup-1.6.1.jar')
 }
