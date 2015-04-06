@@ -162,7 +162,7 @@ public class BookListActivity extends SherlockListActivity {
 
             TextView tv = (TextView) convertView.findViewById(R.id.book_list_text);
             String priceString = Format.getPrice(book.getPrice());
-            tv.setText(book.getTitle() + "\n" + book.getAuthors().get(0).getDisplay_name() + "\n" + priceString);
+            tv.setText(book.getTitle() + "\n" + book.getFirstAuthorDisplayName() + "\n" + priceString);
 
             return convertView;
         }

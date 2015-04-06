@@ -17,9 +17,10 @@ import android.os.AsyncTask;
 import com.google.gson.Gson;
 import com.unleashyouradventure.swaccess.SmashwordsAPIHelper;
 import com.unleashyouradventure.swapi.cache.Cache;
+import com.unleashyouradventure.swapi.model.SwAccount;
+import com.unleashyouradventure.swapi.model.SwPerson;
+import com.unleashyouradventure.swapi.model.SwPrice;
 import com.unleashyouradventure.swapi.retriever.Book;
-import com.unleashyouradventure.swapi.retriever.json.Author;
-import com.unleashyouradventure.swapi.retriever.json.JPrice;
 
 public class BookOfTheDayHelper {
     private final static Logger log = Logger.getLogger(BookOfTheDayHelper.class.getName());
@@ -74,16 +75,21 @@ public class BookOfTheDayHelper {
     }
 
     private List<Book> getDefaultBooks() {
-        Author sherrie = new Author();
-        sherrie.setDisplay_name("Sherrie McCarthy");
-        sherrie.setUsername("SherrieMcCarthy");
-        Author patrick = new Author();
-        patrick.setDisplay_name("Patrick Schweizer");
-        patrick.setUsername("PatrickSchweizer");
+        SwPerson sherrie = new SwPerson();
+        SwAccount sherrieAccount = new SwAccount();
+        sherrie.setAccount(sherrieAccount);
+        sherrieAccount.setDisplay_name("Sherrie McCarthy");
+        sherrieAccount.setUsername("SherrieMcCarthy");
+
+        SwPerson patrick = new SwPerson();
+        SwAccount patrickAccount = new SwAccount();
+        patrick.setAccount(patrickAccount);
+        patrickAccount.setDisplay_name("Patrick Schweizer");
+        patrickAccount.setUsername("PatrickSchweizer");
 
         List<Book> books = new LinkedList<Book>();
         Book book = new Book();
-        book.addAuthor(sherrie);
+        book.addContributor(sherrie);
         book.setCover_url("http://cache.smashwire.com/bookCovers/c995b4887666c244215b98c525b7856fb2f74ca6");
         book.addPrice(getPrice(299));
         book.setTitle("Fernweh: A Trans Continental Motorcycle Adventure");
@@ -91,7 +97,7 @@ public class BookOfTheDayHelper {
         books.add(book);
 
         book = new Book();
-        book.addAuthor(sherrie);
+        book.addContributor(sherrie);
         book.setCover_url("http://cache.smashwire.com/bookCovers/2c0ef26c7bd3d766766f0a2f438dae991c18ada8");
         book.addPrice(getPrice(299));
         book.setTitle("Buying and Riding a Motorcycle in South East Asia");
@@ -99,7 +105,7 @@ public class BookOfTheDayHelper {
         books.add(book);
 
         book = new Book();
-        book.addAuthor(patrick);
+        book.addContributor(patrick);
         book.setCover_url("http://cache.smashwire.com/bookCovers/03d3d55ec4ab0bd29a36cffda2c129e5d452d4f5");
         book.addPrice(getPrice(299));
         book.setTitle("Fernweh - mit dem Motorrad um die Welt");
@@ -107,7 +113,7 @@ public class BookOfTheDayHelper {
         books.add(book);
 
         book = new Book();
-        book.addAuthor(sherrie);
+        book.addContributor(sherrie);
         book.setCover_url("http://cache.smashwire.com/bookCovers/8e6db3a08d77a9717ba4ea7017cc23934d8ca9ef");
         book.addPrice(getPrice(399));
         book.setTitle("Iceland: A Stormy Motorcycle Adventure");
@@ -115,7 +121,7 @@ public class BookOfTheDayHelper {
         books.add(book);
 
         book = new Book();
-        book.addAuthor(sherrie);
+        book.addContributor(sherrie);
         book.setCover_url("http://cache.smashwire.com/bookCovers/ea3ebad5e0bea7c7f73d0472c9a3dcc77c54a5f1");
         book.addPrice(getPrice(99));
         book.setTitle("The Unleash Your Adventure Packlist: What To Take, What To Leave, & The Hows & Whys Of Motorcycle Travel");
@@ -125,8 +131,8 @@ public class BookOfTheDayHelper {
         return books;
     }
 
-    private JPrice getPrice(int priceInCents) {
-        JPrice price = new JPrice();
+    private SwPrice getPrice(int priceInCents) {
+        SwPrice price = new SwPrice();
         price.setAmount(((double) priceInCents) / 100);
         price.setCurrency("USD");
         return price;
