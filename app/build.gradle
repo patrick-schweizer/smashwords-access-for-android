@@ -32,4 +32,5 @@ dependencies {
     compile 'com.unleashyouradventure.sw:smashwords-java-api:1.0-SNAPSHOT'
     compile files('libs/imageloader-core-1.5.8.jar')
     compile files('libs/jsoup-1.6.1.jar')
+    testCompile 'junit:junit:4.8.2'
 }
