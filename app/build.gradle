@@ -7,13 +7,12 @@ android {
     defaultConfig {
         applicationId "com.unleashyouradventure.swaccess"
         minSdkVersion 9
-        targetSdkVersion 9
+        targetSdkVersion 14
     }
 
     buildTypes {
         release {
             minifyEnabled false
-        //    proguardFiles getDefaultProguardFile('proguard-android.txt')
             zipAlignEnabled true
         }
     }
@@ -26,9 +25,9 @@ android {
 }
 
 dependencies {
-    compile 'com.google.code.gson:gson:2.2.1'
+    compile 'com.google.code.gson:gson:2.3'
     compile 'com.actionbarsherlock:actionbarsherlock:4.4.0@aar'
-    compile 'com.android.support:support-v4:18.0.0'
+    compile 'com.android.support:support-v4:21.0.3'
     compile 'com.unleashyouradventure.sw:smashwords-java-api:1.0-SNAPSHOT'
     compile files('libs/imageloader-core-1.5.8.jar')
     compile files('libs/jsoup-1.6.1.jar')
