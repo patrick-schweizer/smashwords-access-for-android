@@ -2,6 +2,7 @@ package com.unleashyouradventure.swaccess;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -16,43 +17,21 @@ import android.widget.TextView;
 import com.actionbarsherlock.app.SherlockActivity;
 import com.novoda.imageloader.core.model.ImageTag;
 import com.novoda.imageloader.core.model.ImageTagFactory;
-import com.unleashyouradventure.swaccess.BookListActivity.CategoryList;
-import com.unleashyouradventure.swaccess.BookListActivity.LibraryList;
-import com.unleashyouradventure.swaccess.BookListActivity.SearchList;
+import com.unleashyouradventure.swaccess.activity.booklist.BookListActivity;
+import com.unleashyouradventure.swaccess.activity.booklist.BookListActivity.CategoryList;
+import com.unleashyouradventure.swaccess.activity.booklist.BookListActivity.LibraryList;
+import com.unleashyouradventure.swaccess.activity.booklist.SearchList;
 import com.unleashyouradventure.swaccess.util.AppRater;
 import com.unleashyouradventure.swaccess.util.BookOfTheDayHelper;
+import com.unleashyouradventure.swapi.model.ImageSize;
 import com.unleashyouradventure.swapi.retriever.Book;
-import com.unleashyouradventure.swapi.retriever.Book.ImageSize;
 
 public class MainActivity extends SherlockActivity {
-
-    enum Entry {
-        myLibrary("My Library", android.R.drawable.ic_menu_gallery), search("Search", android.R.drawable.ic_menu_search), category("By Category", android.R.drawable.ic_menu_compass), settings(
-                "Preferences", android.R.drawable.ic_menu_preferences), reader("Readers", android.R.drawable.ic_menu_preferences),
-
-        about("About", android.R.drawable.ic_menu_info_details);
-        private final String text;
-        private final int iconId;
-
-        Entry(String text, int iconId) {
-            this.text = text;
-            this.iconId = iconId;
-        }
-
-        public String getText() {
-            return text;
-        }
-
-        public int getIconId() {
-            return iconId;
-        }
-
-    }
-
     private ImageTagFactory imageTagFactory;
     private GridView menu;
     private BookOfTheDayHelper bookOfTheDayHelper;
 
+    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
@@ -75,17 +54,17 @@ public class MainActivity extends SherlockActivity {
         new ShowBookOfTheDayTask(this).execute();
     }
 
-    public class MenuItem extends ArrayAdapter<Entry> {
+    public class MenuItem extends ArrayAdapter<MainActivityMenyEntry> {
 
         public MenuItem(Context context, int textViewResourceId) {
-            super(context, textViewResourceId, Entry.values());
+            super(context, textViewResourceId, MainActivityMenyEntry.values());
         }
 
         public View getView(int position, View convertView, ViewGroup parent) {
             View row = createRow(parent);
             TextView tv = (TextView) row.findViewById(R.id.text);
-            Entry entry = Entry.values()[position];
-            tv.setText(entry.getText());
+            MainActivityMenyEntry entry = MainActivityMenyEntry.values()[position];
+            tv.setText(getContext().getText(entry.getTextId()));
             tv.setCompoundDrawablesWithIntrinsicBounds(0, entry.getIconId(), 0, 0);
             tv.setOnClickListener(new StartActivityOnClickListener(entry));
             return row;
@@ -101,29 +80,33 @@ public class MainActivity extends SherlockActivity {
 
     private class StartActivityOnClickListener implements OnClickListener {
 
-        private Entry entry;
+        private MainActivityMenyEntry entry;
 
-        private StartActivityOnClickListener(Entry entry) {
+        private StartActivityOnClickListener(MainActivityMenyEntry entry) {
             this.entry = entry;
         }
 
         @Override
         public void onClick(View v) {
             Intent intent = null;
-            if (entry == Entry.myLibrary) {
+            if (entry == MainActivityMenyEntry.myLibrary) {
                 intent = new Intent(menu.getContext(), BookListActivity.class);
                 intent.putExtra(BookListActivity.IntentProperty.listType.name(), new LibraryList());
-            } else if (entry == Entry.settings) {
+            } else if (entry == MainActivityMenyEntry.settings) {
                 intent = new Intent(menu.getContext(), PreferencesActivity.class);
-            } else if (entry == Entry.search) {
+            } else if (entry == MainActivityMenyEntry.search) {
                 intent = new Intent(menu.getContext(), BookListActivity.class);
                 intent.putExtra(BookListActivity.IntentProperty.listType.name(), new SearchList());
-            } else if (entry == Entry.category) {
+            } else if (entry == MainActivityMenyEntry.category) {
                 intent = new Intent(menu.getContext(), BookListActivity.class);
                 intent.putExtra(BookListActivity.IntentProperty.listType.name(), new CategoryList());
-            } else if (entry == Entry.reader) {
+            } else if (entry == MainActivityMenyEntry.reader) {
                 intent = new Intent(menu.getContext(), ReaderActivity.class);
-            } else {
+            } else if (entry == MainActivityMenyEntry.help) {
+                String url = "http://unleashyouradventure.com/smashwords-access-help-faq/";
+                intent = new Intent(Intent.ACTION_VIEW);
+                intent.setData(Uri.parse(url));
+            }else {
                 intent = new Intent(menu.getContext(), AboutActivity.class);
             }
             menu.getContext().startActivity(intent);

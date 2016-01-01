@@ -8,42 +8,45 @@
         android:id="@+id/linearLayout1"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical" >
-
+        android:orientation="vertical"
+        android:layout_marginRight="8dp"
+        android:layout_marginLeft="8dp"
+        android:paddingRight="8dp">
         <ImageView          
             android:id="@+id/bookDetailImage"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:contentDescription="Image of book"
-            android:paddingLeft="5dp"
-            android:paddingRight="5dp"
+            android:contentDescription="@string/BookActivity_ImageOfBook"
+
              />
 
         <TextView
             android:id="@+id/bookDetails"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            />
 
 
 
         <ProgressBar
             android:id="@+id/bookLoadProgress"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            />
         
         <Button
             android:id="@+id/bookButtonBuy"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Buy Book"
+            android:text="@string/BookActivity_buy_book"
             android:visibility="invisible" />
 
         <Button
             android:id="@+id/bookButtonDownloadSample"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Download Book Sample"
+            android:text="@string/BookActivity_download_book_sample"
             android:visibility="invisible" />
         
         <Button
@@ -58,6 +61,12 @@
             android:layout_height="wrap_content"
             android:text="Share Book Link"
              />
+        <Button
+            android:id="@+id/bookSeries"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/BookActivity_series"
+            />
         <RatingBar
             android:id="@+id/bookRatingBar"
             android:layout_width="wrap_content"
@@ -71,7 +80,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium" 
-            android:text="loading..."/>
+            android:text="@string/BookActivity_loading"
+/>
         
     </LinearLayout>
 

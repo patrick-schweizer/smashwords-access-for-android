@@ -24,6 +24,8 @@ import android.widget.Toast;
 import com.actionbarsherlock.app.SherlockActivity;
 import com.novoda.imageloader.core.model.ImageTag;
 import com.novoda.imageloader.core.model.ImageTagFactory;
+import com.unleashyouradventure.swaccess.activity.booklist.BookListActivity;
+import com.unleashyouradventure.swaccess.activity.booklist.SeriesList;
 import com.unleashyouradventure.swaccess.readers.LeaveInSmashwordsFolder;
 import com.unleashyouradventure.swaccess.readers.Reader;
 import com.unleashyouradventure.swaccess.readers.Reader.CopyToReaderResult;
@@ -32,6 +34,8 @@ import com.unleashyouradventure.swaccess.util.BookOfTheDayHelper;
 import com.unleashyouradventure.swaccess.util.Format;
 import com.unleashyouradventure.swaccess.util.ProgressCallbackAsyncTask;
 import com.unleashyouradventure.swapi.Smashwords;
+import com.unleashyouradventure.swapi.model.ImageSize;
+import com.unleashyouradventure.swapi.model.SwSeries;
 import com.unleashyouradventure.swapi.retriever.Book;
 import com.unleashyouradventure.swapi.retriever.Book.Download;
 import com.unleashyouradventure.swapi.retriever.Book.FileType;
@@ -66,6 +70,7 @@ public class BookActivity extends SherlockActivity {
             displayBook();
         }
         new LoadBookTask(this.progress).execute(bookId);
+
     }
 
     private long getBookIdFromIntent() {
@@ -75,8 +80,9 @@ public class BookActivity extends SherlockActivity {
         if (Intent.ACTION_VIEW.equals(action)) {
             String bookId = new StringTrimmer(intent.getData().getPath()).getBeforeNext("?").getAfterLast("/").toString();
             id = Long.parseLong(bookId);
-        } else
+        } else {
             id = getIntent().getLongExtra(IntentParam.bookToShow.name(), 0);
+        }
         return id;
     }
 
@@ -96,13 +102,13 @@ public class BookActivity extends SherlockActivity {
 
         // Image
         ImageView bookDetailImage = (ImageView) findViewById(R.id.bookDetailImage);
-        ImageTag tag = imageTagFactory.build(book.getCover_url(Book.ImageSize.full), this);
+        ImageTag tag = imageTagFactory.build(book.getCover_url(ImageSize.full), this);
         ((ImageView) bookDetailImage).setTag(tag);
         SmashwordsAPIHelper.getImageLoader().getLoader().load(bookDetailImage);
 
         // Rating
         RatingBar ratingBar = (RatingBar) findViewById(R.id.bookRatingBar);
-        ratingBar.setVisibility((book.getRating() > -1) ? RatingBar.VISIBLE : RatingBar.GONE);
+        ratingBar.setVisibility((book.getRating() > -1) ? View.VISIBLE : View.GONE);
         if (book.getRating() >= 0) {
             ratingBar.setRating((float) book.getRating());
         }
@@ -110,7 +116,7 @@ public class BookActivity extends SherlockActivity {
         // Book Details
         StringBuilder b = new StringBuilder();
         b.append(book.getTitle()).append("\n");
-        b.append("by ").append(book.getFirstAuthorDisplayName()).append("\n");
+        b.append("by ").append(book.getFirstAuthorDisplayNameOrNull()).append("\n");
         String priceString = Format.getPrice(book.getPrice());
         b.append("Price: ").append(priceString).append("\n");
         bookDetailsView.setText(b.toString());
@@ -197,6 +203,27 @@ public class BookActivity extends SherlockActivity {
             description = book.getShort_description();
         }
         bookDescriptionView.setText(description);
+
+        // Series
+        Button seriesButton = (Button) findViewById(R.id.bookSeries);
+        boolean isPartOfSeries = book.getSeries() !=null && !book.getSeries().isEmpty();
+        if(isPartOfSeries) {
+            final Context context = this;;
+            seriesButton.setOnClickListener(new OnClickListener() {
+
+                @Override
+                public void onClick(View v) {
+                    SwSeries series = book.getSeries().get(0);
+                    Intent intent = new Intent(context, BookListActivity.class);
+                    intent.putExtra(BookListActivity.IntentProperty.listType.name(), new SeriesList(series));
+                    context.startActivity(intent);
+                }
+            });
+        }
+        // TODO: this is not working yet, disable
+        // seriesButton.setVisibility(isPartOfSeries ? Button.VISIBLE : Button.GONE);
+        seriesButton.setVisibility(Button.GONE);
+
     }
 
     public String[] getAvailableReadersAsStringArray(List<Reader> availableReaders) {

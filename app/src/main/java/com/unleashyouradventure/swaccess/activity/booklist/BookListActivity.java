@@ -1,7 +1,6 @@
-package com.unleashyouradventure.swaccess;
+package com.unleashyouradventure.swaccess.activity.booklist;
 
 import java.io.IOException;
-import java.io.Serializable;
 import java.net.UnknownHostException;
 import java.util.List;
 
@@ -20,7 +19,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -33,12 +31,16 @@ import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 import com.novoda.imageloader.core.model.ImageTag;
 import com.novoda.imageloader.core.model.ImageTagFactory;
+import com.unleashyouradventure.swaccess.BookActivity;
+import com.unleashyouradventure.swaccess.ListType;
+import com.unleashyouradventure.swaccess.R;
+import com.unleashyouradventure.swaccess.SmashwordsAPIHelper;
 import com.unleashyouradventure.swaccess.util.AndroidHelper;
 import com.unleashyouradventure.swaccess.util.Format;
 import com.unleashyouradventure.swaccess.util.ProgressCallbackAsyncTask;
-import com.unleashyouradventure.swaccess.util.StringUtils;
 import com.unleashyouradventure.swapi.load.PageLoader;
 import com.unleashyouradventure.swapi.load.PageLoader.ProgressCallback;
+import com.unleashyouradventure.swapi.model.ImageSize;
 import com.unleashyouradventure.swapi.retriever.Book;
 import com.unleashyouradventure.swapi.retriever.BookCategory;
 import com.unleashyouradventure.swapi.retriever.BookList;
@@ -156,13 +158,13 @@ public class BookListActivity extends SherlockListActivity {
             convertView = inflater.inflate(R.layout.book_list_item, null);
 
             ImageView bookImageView = (ImageView) convertView.findViewById(R.id.book_list_image);
-            ImageTag tag = imageTagFactory.build(book.getCover_url(Book.ImageSize.thumb), this.getContext());
+            ImageTag tag = imageTagFactory.build(book.getCover_url(ImageSize.thumb), this.getContext());
             ((ImageView) bookImageView).setTag(tag);
             SmashwordsAPIHelper.getImageLoader().getLoader().load(bookImageView);
 
             TextView tv = (TextView) convertView.findViewById(R.id.book_list_text);
             String priceString = Format.getPrice(book.getPrice());
-            tv.setText(book.getTitle() + "\n" + book.getFirstAuthorDisplayName() + "\n" + priceString);
+            tv.setText(book.getTitle() + "\n" + book.getFirstAuthorDisplayNameOrNull() + "\n" + priceString);
 
             return convertView;
         }
@@ -260,93 +262,9 @@ public class BookListActivity extends SherlockListActivity {
     private static class DummyBookForLoadList extends Book {
     }
 
-    public static abstract class ListType implements Serializable {
-        protected final String title;
 
-        public ListType(String title) {
-            this.title = title;
-        }
 
-        public String getTitle() {
-            return title;
-        }
 
-        public abstract BookList load(ProgressCallback progressCallback) throws IOException;
-
-        public void showOptions(BookListActivity context) {
-            // default: do nothing
-        }
-
-        public boolean hasOptions() {
-            return false;
-        }
-
-        public boolean isReadyForLoading() {
-            return true;
-        }
-    }
-
-    public static class SearchList extends ListType {
-
-        private String searchTerm;
-
-        public SearchList() {
-            super("Book Search");
-        }
-
-        public BookList load(ProgressCallback progressCallback) throws IOException {
-            BookListRetriever retriever = SmashwordsAPIHelper.getSmashwords().getBookListRetriever();
-            BookList bookList = retriever.getBooksBySearch(progressCallback, searchTerm);
-            return bookList;
-        }
-
-        @Override
-        public void showOptions(final BookListActivity context) {
-
-            AlertDialog.Builder alert = new AlertDialog.Builder(context);
-            alert.setTitle("Search for Books");
-
-            // Set an EditText view to get user input
-            final EditText input = new EditText(context);
-            alert.setView(input);
-
-            alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int whichButton) {
-                    String newSearchTerm = input.getText().toString();
-                    boolean reloadRequired = !(StringUtils.equals(newSearchTerm, searchTerm));
-                    if (reloadRequired) {
-                        searchTerm = newSearchTerm;
-                        context.reloadList();
-                    }
-                }
-            });
-
-            alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int whichButton) {
-                    // Canceled.
-                }
-            });
-            alert.show();
-        }
-
-        @Override
-        public boolean hasOptions() {
-            return true;
-        }
-
-        public boolean isReadyForLoading() {
-            return this.searchTerm != null && this.searchTerm.trim().length() > 0;
-        }
-
-        public String getTitle() {
-            String txt = title;
-            if (this.searchTerm != null) {
-                txt += " » ";
-                txt += searchTerm;
-            }
-            return txt;
-        }
-    }
 
     public static class LibraryList extends ListType {
 
