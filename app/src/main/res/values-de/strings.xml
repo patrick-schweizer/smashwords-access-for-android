@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Smashwords Access</string>
+    <string name="SmashwordsAPIHelper_Result_success">Anmeldung war erfolgreich</string>
+    <string name="SmashwordsAPIHelper_Result_failed">Anmeldung bei Smashwords war nicht erfolgreich, bitte überprüfen Sie Ihren Benutzernamen und Kennwort</string>
+    <string name="Main_Activity_Item_about">über</string>
+    <string name="SmashwordsAPIHelper_Result_IOException">Es konnte keine Verbindung zu Smashwords hergestellt werden</string>
+    <string name="Main_Activity_Item_Search">Suche</string>
+    <string name="Main_Activity_Item_Readers">E-Buch Leseapps</string>
+    <string name="Main_Activity_Item_Preferences">Einstellungen</string>
+    <string name="Main_Activity_Item_Library">Ihre Bibliothek</string>
+    <string name="Main_Activity_Item_ByCategory">Kategorien</string>
+    <string name="Main_Activity_Book_Recommendation">Buchempfehlung</string>
+    <string name="MainActivity_About_Title">Über {appTitle}</string>
+    <string name="MainActivity_About_Text">{appTitle} wird entwickelt von </string>
+    <string name="AppRater_Text">If you enjoy using {appTitle}, please take a moment to rate it.\nIf you have any problems or suggestion please click on "Houston I have a problem" and we will try to help you.\nThanks for your using {appTitle}!</string>
+    <string name="Preferences.email.dialogMessage">Bitte eine gültige E-Mail eingeben</string>
+    <string name="Preferences.email.dialogTitle">E-Mail</string>
+    <string name="BookActivity_loading">lade Beschreibung…</string>
+    <string name="BookActivity_ImageOfBook">Image of book</string>
+    <string name="BookActivity_buy_book">Buy Book</string>
+    <string name="BookActivity_download_book_sample">Download Book Sample</string>
+    <string name="Main_Activity_Item_help">Hilfe</string>
+    <string name="BookActivity_series">Search for other books in this series</string>
+</resources>
