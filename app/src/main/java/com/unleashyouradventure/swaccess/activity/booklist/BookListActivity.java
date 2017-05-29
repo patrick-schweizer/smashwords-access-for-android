@@ -122,7 +122,7 @@ public class BookListActivity extends SherlockListActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         if (this.listType.hasOptions()) {
-            MenuItem item = menu.add(0, 1, 0, "Options");
+            MenuItem item = menu.add(0, 1, 0, R.string.BookListActivity_options);
             item.setIcon(android.R.drawable.ic_menu_search);
             item.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
         }

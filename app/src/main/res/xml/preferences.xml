@@ -2,13 +2,13 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     android:key="SmashwordsAccessState" >
 
-    <PreferenceCategory android:title="Smashwords settings" >
+    <PreferenceCategory android:title="@string/Preferences_title" >
         <EditTextPreference
             android:dialogMessage="@string/Preferences.email.dialogMessage"
             android:dialogTitle="@string/Preferences.email.dialogTitle"
             android:key="sw_email"
-            android:summary="Used to access your Smashwords libary. Leave blank to disable Smashwords support."
-            android:title="Smashwords email address" />
+            android:summary="@string/Preferences.email.dialogDescription"
+            android:title="@string/Preferences.email.dialogTitle" />
         <EditTextPreference
             android:dialogMessage="Please enter your smashwords password"
             android:dialogTitle="Password"

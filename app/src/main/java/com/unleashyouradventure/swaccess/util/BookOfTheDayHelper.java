@@ -286,16 +286,6 @@ public class BookOfTheDayHelper {
             getWritableDatabase().delete(TABLE_BOOKS, KEY_INSERT_DATE + " < ?", new String[] { lastDate.toString() });
         }
 
-        // public int updateContact(Contact contact) {
-        // SQLiteDatabase db = this.getWritableDatabase();
-        //
-        // ContentValues values = new ContentValues();
-        // values.put(KEY_NAME, contact.getName());
-        // values.put(KEY_PH_NO, contact.getPhoneNumber());
-        //
-        // return db.update(TABLE_BOOKS, values, KEY_ID + " = ?", new String[] {
-        // String.valueOf(contact.getID()) });
-        // }
 
         public void deleteBook(Book book) {
             SQLiteDatabase db = this.getWritableDatabase();

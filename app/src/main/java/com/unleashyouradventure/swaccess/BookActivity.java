@@ -24,6 +24,7 @@ import android.widget.Toast;
 import com.actionbarsherlock.app.SherlockActivity;
 import com.novoda.imageloader.core.model.ImageTag;
 import com.novoda.imageloader.core.model.ImageTagFactory;
+import com.unleashyouradventure.swaccess.activity.booklist.AuthorList;
 import com.unleashyouradventure.swaccess.activity.booklist.BookListActivity;
 import com.unleashyouradventure.swaccess.activity.booklist.SeriesList;
 import com.unleashyouradventure.swaccess.readers.LeaveInSmashwordsFolder;
@@ -54,6 +55,7 @@ public class BookActivity extends SherlockActivity {
     private ImageTagFactory imageTagFactory;
     private BookOfTheDayHelper bookOfTheDayHelper;
 
+    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.book);
@@ -64,7 +66,7 @@ public class BookActivity extends SherlockActivity {
         book = SmashwordsAPIHelper.getSmashwords().getBookRetriever().getCache().getBook(bookId);
         if (book == null) {
             // Loading complete book
-            this.progress = AndroidHelper.createAndShowProgressDialog(this, "Loading book");
+            this.progress = AndroidHelper.createAndShowProgressDialog(this,(String) getApplicationContext().getResources().getText(R.string.BookActivity_loadingbook));
         } else {
             // Loading only book details
             displayBook();
@@ -74,8 +76,8 @@ public class BookActivity extends SherlockActivity {
     }
 
     private long getBookIdFromIntent() {
-        final Intent intent = getIntent();
-        final String action = intent.getAction();
+        Intent intent = getIntent();
+        String action = intent.getAction();
         long id;
         if (Intent.ACTION_VIEW.equals(action)) {
             String bookId = new StringTrimmer(intent.getData().getPath()).getBeforeNext("?").getAfterLast("/").toString();
@@ -87,6 +89,8 @@ public class BookActivity extends SherlockActivity {
     }
 
     private void displayBook() {
+
+        final Context context = this;
 
         // Reset
         TextView bookDetailsView = (TextView) findViewById(R.id.bookDetails);
@@ -116,14 +120,29 @@ public class BookActivity extends SherlockActivity {
         // Book Details
         StringBuilder b = new StringBuilder();
         b.append(book.getTitle()).append("\n");
-        b.append("by ").append(book.getFirstAuthorDisplayNameOrNull()).append("\n");
+        b.append(context.getString(R.string.BookActivity_by)).append(" ").append(book.getFirstAuthorDisplayNameOrNull()).append("\n");
         String priceString = Format.getPrice(book.getPrice());
-        b.append("Price: ").append(priceString).append("\n");
+        b.append(context.getString(R.string.BookActivity_price)).append(": ").append(priceString).append("\n");
         bookDetailsView.setText(b.toString());
+
+        // Book Author
+        TextView authorView = (TextView) findViewById(R.id.bookAuthor);
+        if(book.getContributors() != null && !book.getContributors().isEmpty()) {
+            authorView.setOnClickListener(new OnClickListener() {
+
+                @Override
+                public void onClick(View v) {
+                    String username = book.getFirstAuthorDisplayNameOrNull();
+                    Intent intent = new Intent(context, BookListActivity.class);
+                    intent.putExtra(BookListActivity.IntentProperty.listType.name(), new AuthorList(book.getContributors().get(0)));
+                    context.startActivity(intent);
+                }
+            });
+        }
 
         // Buy
         Button bookButtonBuy = (Button) findViewById(R.id.bookButtonBuy);
-        boolean showBuyButton = (book.isBookDetailsAdded() && book.canBookBeBought());
+        boolean showBuyButton = book.isBookDetailsAdded() && book.canBookBeBought();
         bookButtonBuy.setVisibility(showBuyButton ? Button.VISIBLE : Button.GONE);
         bookButtonBuy.setOnClickListener(new OnClickListener() {
 
@@ -150,7 +169,7 @@ public class BookActivity extends SherlockActivity {
             public void onClick(View v) {
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(BookActivity.this);
-                builder.setTitle("Pick a reader app");
+                builder.setTitle(context.getString(R.string.BookActivity_pick_reader_app));
                 final List<Reader> availableReaders = Reader.getAvailableReadersForBookFormats(BookActivity.this, book);
                 if (availableReaders.size() == 1 && availableReaders.get(0) instanceof LeaveInSmashwordsFolder) {
                     availableReaders.add(0, new DownloadNewReaderMarker());
@@ -168,7 +187,7 @@ public class BookActivity extends SherlockActivity {
                         Download download = book.getDownloadLinkForNewestVersion(fileType);
                         progress = new ProgressDialog(BookActivity.this);
                         progress.setTitle("");
-                        progress.setMessage("Downloading book");
+                        progress.setMessage(context.getText(R.string.BookActivity_downloading_book));
                         progress.setIndeterminate(false);
                         progress.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
                         progress.show();
@@ -192,14 +211,14 @@ public class BookActivity extends SherlockActivity {
                 intent.setType("text/plain");
                 intent.putExtra(Intent.EXTRA_TEXT, title + " " + book.getUrlForBookDetails() + "?ref=swaccess");
                 intent.putExtra(android.content.Intent.EXTRA_SUBJECT, title);
-                startActivity(Intent.createChooser(intent, "Share " + title));
+                startActivity(Intent.createChooser(intent, context.getString(R.string.BookActivity_share)+" " + title));
             }
         });
 
         // Book Description
         TextView bookDescriptionView = (TextView) findViewById(R.id.bookDescription);
         String description = book.getLong_description();
-        if (description == null || description.length() == 0) {
+        if (description == null || description.isEmpty()) {
             description = book.getShort_description();
         }
         bookDescriptionView.setText(description);
@@ -208,7 +227,6 @@ public class BookActivity extends SherlockActivity {
         Button seriesButton = (Button) findViewById(R.id.bookSeries);
         boolean isPartOfSeries = book.getSeries() !=null && !book.getSeries().isEmpty();
         if(isPartOfSeries) {
-            final Context context = this;;
             seriesButton.setOnClickListener(new OnClickListener() {
 
                 @Override
@@ -220,10 +238,7 @@ public class BookActivity extends SherlockActivity {
                 }
             });
         }
-        // TODO: this is not working yet, disable
-        // seriesButton.setVisibility(isPartOfSeries ? Button.VISIBLE : Button.GONE);
-        seriesButton.setVisibility(Button.GONE);
-
+        seriesButton.setVisibility(isPartOfSeries ? Button.VISIBLE : Button.GONE);
     }
 
     public String[] getAvailableReadersAsStringArray(List<Reader> availableReaders) {
@@ -299,7 +314,7 @@ public class BookActivity extends SherlockActivity {
                     bookOfTheDayHelper.storeBookOfTheDay(result);
                 }
             } catch (UnknownHostException e) {
-                resultMessage = "Please check your Internet connection.";
+                resultMessage = getString(R.string.BookActivity_check_internet);
             } catch (IOException e) {
                 resultMessage = e.getMessage();
             }
@@ -313,8 +328,9 @@ public class BookActivity extends SherlockActivity {
             if (progress != null) {
                 progress.dismiss();
             }
-            if (resultMessage != null)
+            if (resultMessage != null) {
                 showToast(resultMessage);
+            }
         }
 
     }
@@ -327,7 +343,7 @@ public class BookActivity extends SherlockActivity {
     private final class DownloadNewReaderMarker extends Reader {
 
         public DownloadNewReaderMarker() {
-            super("No ebook readers found\n» download one", FileType.values());
+            super(getString(R.string.BookActivity_no_ebook_readers_found), FileType.values());
         }
 
         @Override

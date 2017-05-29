@@ -13,6 +13,7 @@
     <string name="Main_Activity_Item_about">about</string>
     <string name="Preferences.email.dialogMessage">Please enter a valid email address</string>
     <string name="Preferences.email.dialogTitle">email address</string>
+    <string name="Preferences_title">{appTitle} settings</string>
 
     <string name="SmashwordsAPIHelper_Result_IOException">Could not connect to Smashwords in order to log in</string>
     <string name="SmashwordsAPIHelper_Result_success">Successfully logged in into Smashwords</string>
@@ -24,4 +25,22 @@
     <string name="BookActivity_download_book_sample">Download Book Sample</string>
     <string name="Main_Activity_Item_help">help</string>
     <string name="BookActivity_series">Search for other books in this series</string>
+    <string name="BookActivity_check_internet">Please check your Internet connection.</string>
+    <string name="BookActivity_no_ebook_readers_found">No ebook readers found\n» download one</string>
+    <string name="BookActivity_author">Find other books by this author</string>
+    <string name="BookActivity_by">by</string>
+    <string name="BookActivity_loadingbook">Loading book</string>
+    <string name="BookListActivity_options">Options</string>
+    <string name="BookActivity_price">Price</string>
+    <string name="BookActivity_pick_reader_app">Pick a reader app</string>
+    <string name="BookActivity_downloading_book">Downloading Book</string>
+    <string name="BookActivity_share">Share</string>
+    <string name="AppRater_Rate">Rate</string>
+    <string name="AppRater_Help">Houston I have a problem</string>
+    <string name="AppRater_Problem">Problem with {appTitle}</string>
+    <string name="AppRater_Describe_Problem">Please describe your problem here</string>
+    <string name="App_Rater_Remins_me_later">Remind me later</string>
+    <string name="AppRater_Remind_me_later">Remind me later</string>
+    <string name="AppRater_no_thank_you">No, thank you!</string>
+    <string name="Preferences.email.dialogDescription">Used to access your Smashwords libary. Leave blank to disable Smashwords support.</string>
 </resources>
