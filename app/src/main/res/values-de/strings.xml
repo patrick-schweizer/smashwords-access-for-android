@@ -36,8 +36,8 @@
     <string name="AppRater_Help">Hilfe</string>
     <string name="AppRater_Problem">Problem mit {appTitle}</string>
     <string name="AppRater_Describe_Problem">Bitte beschreiben Sie Ihr Problem hier</string>
-    <string name="AppRater_Remind_me_later">Errinere mich später</string>
+    <string name="AppRater_Remind_me_later">Erinnere mich später</string>
     <string name="AppRater_no_thank_you">Nein danke!</string>
-    <string name="Preferences_title">{appTitle} Einstellungen</string>
+    <string name="Preferences_title">Einstellungen</string>
     <string name="Preferences.email.dialogDescription">Wird benötigt um Ihre gekauften Smashwords Bücher anzuzeigen (optional).</string>
 </resources>

@@ -149,9 +149,9 @@ public class BookActivity extends SherlockActivity {
             @Override
             public void onClick(View v) {
                 Intent httpIntent = new Intent(Intent.ACTION_VIEW);
-                httpIntent.setData(Uri.parse(book.getUrlForBookDetails() + "?ref=swaccess"));
-                // httpIntent.setData(Uri.parse(book.getUrlForPuttingThisBookInShoppingCart()
-                // + "?ref=swaccess"));
+                // httpIntent.setData(Uri.parse(book.getUrlForBookDetails() + "?ref=swaccess"));
+                httpIntent.setData(Uri.parse(book.getUrlForPuttingThisBookInShoppingCart()
+                + "?ref=swaccess"));
                 startActivity(httpIntent);
             }
         });

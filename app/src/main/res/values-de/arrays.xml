@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="preferences_adultfilter_entries">
+        <item>Smashwords Voreinstellung</item>
+        <item>ja</item>
+        <item>nein</item>
+    </string-array>
+    <string-array name="preferences_adultfilter_values">
+        <item>swdefault</item>
+        <item>on</item>
+        <item>off</item>
+    </string-array>
+
+</resources>

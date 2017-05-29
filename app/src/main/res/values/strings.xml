@@ -13,7 +13,7 @@
     <string name="Main_Activity_Item_about">about</string>
     <string name="Preferences.email.dialogMessage">Please enter a valid email address</string>
     <string name="Preferences.email.dialogTitle">email address</string>
-    <string name="Preferences_title">{appTitle} settings</string>
+    <string name="Preferences_title">Settings</string>
 
     <string name="SmashwordsAPIHelper_Result_IOException">Could not connect to Smashwords in order to log in</string>
     <string name="SmashwordsAPIHelper_Result_success">Successfully logged in into Smashwords</string>
@@ -39,7 +39,6 @@
     <string name="AppRater_Help">Houston I have a problem</string>
     <string name="AppRater_Problem">Problem with {appTitle}</string>
     <string name="AppRater_Describe_Problem">Please describe your problem here</string>
-    <string name="App_Rater_Remins_me_later">Remind me later</string>
     <string name="AppRater_Remind_me_later">Remind me later</string>
     <string name="AppRater_no_thank_you">No, thank you!</string>
     <string name="Preferences.email.dialogDescription">Used to access your Smashwords libary. Leave blank to disable Smashwords support.</string>
