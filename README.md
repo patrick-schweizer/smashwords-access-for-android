@@ -1,6 +1,6 @@
 # smashwords-access-for-android
 
-Download over 50,000 free books from www.Smashwords.com with this app.
+Download over 70,000 free books from www.Smashwords.com with this app.
 
 Please note: <b>This API is not supported by Smashwords</b>.
 

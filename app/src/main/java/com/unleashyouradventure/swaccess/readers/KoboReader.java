@@ -18,8 +18,4 @@ public class KoboReader extends ReaderWithIntent {
         return "com.kobobooks.android.screens.Welcome";
     }
 
-    /*
-     * @Override protected String getFileDirName() { return "Kobo/epubs"; }
-     */
-
 }

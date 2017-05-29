@@ -15,8 +15,8 @@ import com.unleashyouradventure.swaccess.R;
 
 public class AppRater {
 
-    private final static int DAYS_UNTIL_PROMPT = 3;
-    private final static int LAUNCHES_UNTIL_PROMPT = 7;
+    private static final int DAYS_UNTIL_PROMPT = 3;
+    private static final int LAUNCHES_UNTIL_PROMPT = 7;
 
     public static void app_launched(Context mContext) {
         SharedPreferences prefs = mContext.getSharedPreferences("apprater", 0);
@@ -44,7 +44,7 @@ public class AppRater {
             }
         }
 
-        editor.commit();
+        editor.apply();
     }
 
     public static void showRateDialog(final Context mContext, final SharedPreferences.Editor editor) {
@@ -52,7 +52,7 @@ public class AppRater {
         final String appTitle = AndroidHelper.getName(mContext);
         final String appPackageName = mContext.getPackageName();
 
-        dialog.setTitle("Rate " + appTitle);
+        dialog.setTitle(mContext.getString(R.string.AppRater_Rate)+" " + appTitle);
 
         LinearLayout ll = new LinearLayout(mContext);
         ll.setOrientation(LinearLayout.VERTICAL);
@@ -65,7 +65,7 @@ public class AppRater {
         ll.addView(tv);
 
         Button b1 = new Button(mContext);
-        b1.setText("Rate " + appTitle);
+        b1.setText(mContext.getString(R.string.AppRater_Rate)+" " + appTitle);
         b1.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
                 mContext.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=" + appPackageName)));
@@ -79,15 +79,15 @@ public class AppRater {
         ll.addView(b1);
 
         Button buttonProblem = new Button(mContext);
-        buttonProblem.setText("Houston I have a problem");
+        buttonProblem.setText(mContext.getString(R.string.AppRater_Help));
         buttonProblem.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
                 Intent emailIntent = new Intent(android.content.Intent.ACTION_SEND);
                 String aEmailList[] = { "unleashyouradventure@googlemail.com" };
                 emailIntent.putExtra(android.content.Intent.EXTRA_EMAIL, aEmailList);
-                emailIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Problem with Smashwords Access");
+                emailIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, mContext.getString(R.string.AppRater_Problem));
                 emailIntent.setType("plain/text");
-                emailIntent.putExtra(android.content.Intent.EXTRA_TEXT, "Please describe your problem here");
+                emailIntent.putExtra(android.content.Intent.EXTRA_TEXT,  mContext.getString(R.string.AppRater_Describe_Problem));
                 mContext.startActivity(emailIntent);
                 dialog.dismiss();
             }
@@ -95,7 +95,7 @@ public class AppRater {
         ll.addView(buttonProblem);
 
         Button b2 = new Button(mContext);
-        b2.setText("Remind me later");
+        b2.setText( mContext.getString(R.string.AppRater_Remind_me_later));
         b2.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
                 dialog.dismiss();
@@ -104,7 +104,7 @@ public class AppRater {
         ll.addView(b2);
 
         Button b3 = new Button(mContext);
-        b3.setText("No, thanks");
+        b3.setText( mContext.getString(R.string.AppRater_no_thank_you));
         b3.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
                 if (editor != null) {

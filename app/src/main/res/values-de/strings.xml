@@ -3,7 +3,7 @@
     <string name="app_name">Smashwords Access</string>
     <string name="SmashwordsAPIHelper_Result_success">Anmeldung war erfolgreich</string>
     <string name="SmashwordsAPIHelper_Result_failed">Anmeldung bei Smashwords war nicht erfolgreich, bitte überprüfen Sie Ihren Benutzernamen und Kennwort</string>
-    <string name="Main_Activity_Item_about">über</string>
+    <string name="Main_Activity_Item_about">Über</string>
     <string name="SmashwordsAPIHelper_Result_IOException">Es konnte keine Verbindung zu Smashwords hergestellt werden</string>
     <string name="Main_Activity_Item_Search">Suche</string>
     <string name="Main_Activity_Item_Readers">E-Buch Leseapps</string>
@@ -12,14 +12,32 @@
     <string name="Main_Activity_Item_ByCategory">Kategorien</string>
     <string name="Main_Activity_Book_Recommendation">Buchempfehlung</string>
     <string name="MainActivity_About_Title">Über {appTitle}</string>
-    <string name="MainActivity_About_Text">{appTitle} wird entwickelt von </string>
-    <string name="AppRater_Text">If you enjoy using {appTitle}, please take a moment to rate it.\nIf you have any problems or suggestion please click on "Houston I have a problem" and we will try to help you.\nThanks for your using {appTitle}!</string>
+    <string name="MainActivity_About_Text">{appTitle} wird entwickelt von <a href="http://www.unleashyouradventure.com">UnleashourAdventure</a>, einem unabhängigen Verlag für inspirierende Reisegeschichten</string>
+    <string name="AppRater_Text">Wenn Ihnen die App {appTitle} gefällt würden wir uns über eine Bewertung freuen.\nWenn Sie Probleme oder Vorschläge haben klicken Sie auf "Hilfe" und wir versuchen Ihnen weiterzuhelfen.\nVielen Dank, dass Sie {appTitle} benutzen!</string>
     <string name="Preferences.email.dialogMessage">Bitte eine gültige E-Mail eingeben</string>
     <string name="Preferences.email.dialogTitle">E-Mail</string>
-    <string name="BookActivity_loading">lade Beschreibung…</string>
-    <string name="BookActivity_ImageOfBook">Image of book</string>
-    <string name="BookActivity_buy_book">Buy Book</string>
+    <string name="BookActivity_loading">Lade Beschreibung…</string>
+    <string name="BookActivity_ImageOfBook">Einband</string>
+    <string name="BookActivity_buy_book">Buch kaufen</string>
     <string name="BookActivity_download_book_sample">Download Book Sample</string>
     <string name="Main_Activity_Item_help">Hilfe</string>
-    <string name="BookActivity_series">Search for other books in this series</string>
+    <string name="BookActivity_series">Nach anderen Büchern in dieser Reihe suchen</string>
+    <string name="BookActivity_check_internet">Bitte überprüfen Sie Ihre Internetverbindung.</string>
+    <string name="BookActivity_no_ebook_readers_found">Keine E-Buch Leseapp gefunden\n» Installieren Sie eine</string>
+    <string name="BookActivity_author">Andere Bücher von diesem Author</string>
+    <string name="BookActivity_loadingbook">Lade Buch</string>
+    <string name="BookListActivity_options">Einstellungen</string>
+    <string name="BookActivity_by">von</string>
+    <string name="BookActivity_price">Preis</string>
+    <string name="BookActivity_pick_reader_app">E-Book Leseapp auswählen</string>
+    <string name="BookActivity_downloading_book">Lade Buch</string>
+    <string name="BookActivity_share">Teile</string>
+    <string name="AppRater_Rate">Bewerten Sie</string>
+    <string name="AppRater_Help">Hilfe</string>
+    <string name="AppRater_Problem">Problem mit {appTitle}</string>
+    <string name="AppRater_Describe_Problem">Bitte beschreiben Sie Ihr Problem hier</string>
+    <string name="AppRater_Remind_me_later">Errinere mich später</string>
+    <string name="AppRater_no_thank_you">Nein danke!</string>
+    <string name="Preferences_title">{appTitle} Einstellungen</string>
+    <string name="Preferences.email.dialogDescription">Wird benötigt um Ihre gekauften Smashwords Bücher anzuzeigen (optional).</string>
 </resources>
